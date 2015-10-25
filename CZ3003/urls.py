@@ -20,6 +20,10 @@ from DontCrysis import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^Subscribe/$', views.subscribe),
-    url(r'^Login/$', views.login),
-    url(r'^CreateEvent/$', views.create_event),
+    url(r'^login/$',  views.login),
+    url(r'^loggedin/$', views.loggedin),
+    url(r'^auth/$',  views.auth_view),
+    url(r'^logout/$', views.logout),
+    url(r'^register/$', views.register_user),
+    url(r'^register_success/$', views.register_success),
 ]
