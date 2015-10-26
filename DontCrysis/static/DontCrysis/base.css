@@ -1,0 +1,69 @@
+html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+}
+
+body{
+        font-family: 'Ubuntu', serif;
+}
+
+.header{
+	background-color: #1589FF;
+}
+
+h1#title{
+	color: white;
+}
+
+#buttons{
+	margin-top: 20px;
+}
+
+a{
+	text-decoration: none;
+}
+
+.form-control{
+	width: 50%;
+}
+
+
+#map {
+      	height: 100%;
+}
+
+ul
+{
+    list-style-type: none;
+}
+
+label{
+    padding : 15px;
+    width: 10%;
+    text-align: right;
+}
+
+input{
+    margin-left: 10px;
+}
+
+input[type=submit]{
+    border: none;
+    background-color: #1589FF;
+    color: white;
+    float: right;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 2px;
+}
+
+.form-wrapper{
+    padding: 5%;
+    background-color: ghostwhite;
+}
+
+.errorlist{
+    color: red;
+    text-size: 10px;
+}
