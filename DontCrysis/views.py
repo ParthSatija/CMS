@@ -1,15 +1,13 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import auth
 from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from django.template import Context
-from forms import SubscriberForm
-from forms import CrisisCreateForm
-from forms import ReportReceiverForm
+from forms import SubscriberForm,CrisisCreateForm, ReportReceiverForm, CrisisForm
 from django.core.context_processors import csrf
-from models import Crisis
-from models import Agency
+from models import Crisis, Agency, ReportReceiver
+from django.core.urlresolvers import reverse_lazy
 import datetime
 # Create your views here.
 
@@ -36,9 +34,9 @@ def auth_view(request):
         return HttpResponseRedirect('/invalid')
 
 def loggedin(request):
-    crises = Crisis.objects
-
-    return render_to_response('loggedin.html')
+    crises = Crisis.objects.all().order_by('-date','-time')
+    reports= ReportReceiver.objects.all()
+    return render(request,'loggedin.html',{'crises' :crises, 'reports':reports})
 
 def invalid_login(request):
     return render_to_response('invalid.html')
@@ -59,9 +57,7 @@ def register_user(request):
         form = UserCreationForm()
     args = {}
     args.update(csrf(request))
-
     args['form'] = form
-
     return render_to_response('register.html', args)
 
 
@@ -89,7 +85,7 @@ def addReportReceiver(request):
         form = ReportReceiverForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/user/reportreceiveradded')
+            return HttpResponseRedirect('/loggedin')
      else:
         form = ReportReceiverForm()
      args = {}
@@ -104,7 +100,7 @@ def report_reciever_added(request):
 def subscriber_successful(request):
     return render_to_response('homepage.html')
 
-def create_crisis(request):
+def crisis_create(request):
     if request.POST:
         form=CrisisCreateForm(request.POST)
         if form.is_valid():
@@ -120,9 +116,36 @@ def create_crisis(request):
     args={}
     args.update(csrf(request))
     args['form']=form
-    return render_to_response('create_crisis.html', args)
+    return render_to_response('crisis_create.html', args)
 
 def status_crisis(request):
     crisis_type=request.session.get('type')
     agency = Agency.objects.filter(type=crisis_type)
     return render(request, 'status_crisis.html', {'agency':agency})
+
+def crisis_update(request, pk, template_name='update_crisis.html'):
+    crisis = get_object_or_404(Crisis, pk=pk)
+    form = CrisisForm(request.POST or None, instance=crisis)
+    if form.is_valid():
+        form.save()
+        return redirect('/loggedin')
+    return render(request, template_name, {'form':form})
+
+def crisis_toggle_active(request, pk, template_name='loggedin.html'):
+    crisis = get_object_or_404(Crisis, pk=pk)
+    if crisis.isActive:
+            crisis.isActive = 0
+    else:
+            crisis.isActive = 1
+    crisis.save()
+    return redirect('/loggedin')
+
+
+def crisis_delete(request, pk, template_name='crisis_confirm_delete.html'):
+    crisis = get_object_or_404(Crisis, pk=pk)
+    if request.method=='POST':
+        crisis.delete()
+        return redirect('/loggedin')
+    return render(request, template_name, {'object':crisis})
+
+

@@ -45,12 +45,13 @@ input{
 
 input[type=submit]{
     border: none;
-    background-color: #1589FF;
+    background-color: limegreen;
     color: white;
     float: right;
     font-weight: bold;
-    padding: 5px;
-    border-radius: 2px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
 .form-wrapper{
@@ -64,6 +65,56 @@ input[type=submit]{
 }
 
 .list{
-    background-color: floralwhite;
+    background-color: ivory;
 }
 
+table{
+    background-color: aliceblue;
+    align-items: center;
+}
+
+.table-wrapper{
+    overflow-y: scroll;
+    height: 200px;
+}
+
+td,th{
+   padding: 5px;
+}
+
+#exclaim{
+    color: red;
+}
+
+#safe{
+    color: limegreen;
+}
+
+.headrow{
+    font-weight: bold;
+    background-color: #1589FF;
+    color: white;
+}
+
+.create-button{
+    background-color: limegreen;
+    border-radius: 10px;
+    color: white;
+    padding: 1%;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.table-header{
+    display: inline-block;
+    padding-right: 5px;
+}
+
+.options{
+    margin: 5px;
+    color: black;
+    background-color: lightsteelblue;
+    padding: 5px;
+    border-radius: 5px;
+}

@@ -30,8 +30,11 @@ urlpatterns = [
     url(r'^register_success/$', views.register_success),
     url(r'^subscribe/$', views.createSubscriber),
     url(r'^subscriber_successful/$', views.subscriber_successful),
-    url(r'^crisis/create/$', views.create_crisis, name='Create Crisis'),
-    url(r'^crisis/status/$', views.status_crisis, name='Crises Creation Status'),
-    url(r'^user/addreportreceiver', views.addReportReceiver, name="Add Report Receiver"),
-    url(r'^user/reportreceiveradded', views.report_reciever_added, name="Report Receiver Added")
+    url(r'^crisis/create/$', views.crisis_create, name='create-crisis'),
+    url(r'^crisis/status/$', views.status_crisis, name='crises-created'),
+    url(r'^user/addreportreceiver', views.addReportReceiver, name="add-report-receiver"),
+    url(r'^user/reportreceiveradded', views.report_reciever_added, name="report-receiver-added"),
+    url(r'^edit/(?P<pk>\d+)$', views.crisis_update, name='crisis_edit'),
+    url(r'^delete/(?P<pk>\d+)$', views.crisis_delete, name='crisis_delete'),
+    url(r'^toggle/(?P<pk>\d+)$', views.crisis_toggle_active, name='crisis_toggle_active'),
 ]

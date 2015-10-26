@@ -9,14 +9,16 @@ class CrisisCreateForm(forms.ModelForm):
         exclude=['isActive','date','time']
 
 class SubscriberForm(forms.ModelForm):
-
     class Meta:
         model = Subscriber
         fields = "__all__"
 
 class ReportReceiverForm(forms.ModelForm):
-
     class Meta:
         model = ReportReceiver
         fields = "__all__"
 
+class CrisisForm(forms.ModelForm):
+    class Meta:
+        model = Crisis
+        fields = ['description','postalcode', 'severity' ]
