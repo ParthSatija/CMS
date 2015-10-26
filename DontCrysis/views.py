@@ -8,6 +8,8 @@ from forms import SubscriberForm
 from forms import CrisisCreateForm
 from forms import ReportReceiverForm
 from django.core.context_processors import csrf
+from models import Crisis
+from models import Agency
 import datetime
 # Create your views here.
 
@@ -34,8 +36,9 @@ def auth_view(request):
         return HttpResponseRedirect('/invalid')
 
 def loggedin(request):
-    return render_to_response('loggedin.html',
-                              {'full_name': request.user.username})
+    crises = Crisis.objects
+
+    return render_to_response('loggedin.html')
 
 def invalid_login(request):
     return render_to_response('invalid.html')
@@ -80,6 +83,7 @@ def createSubscriber(request):
     args['form'] = form
     return render_to_response('Subscribe.html', args)
 
+#@login_required(redirect ka url)
 def addReportReceiver(request):
      if request.POST:
         form = ReportReceiverForm(request.POST)
@@ -104,11 +108,13 @@ def create_crisis(request):
     if request.POST:
         form=CrisisCreateForm(request.POST)
         if form.is_valid():
+            crisis_type=form.cleaned_data['type']
             crisis = form.save(commit=False);
             crisis.date = datetime.date.today()
             crisis.time = datetime.datetime.now().time()
             crisis.save()
-            return HttpResponseRedirect('/crisis/status')
+            request.session['type']=crisis_type
+            return HttpResponseRedirect('/crisis/status', crisis.type)
     else:
         form=CrisisCreateForm()
     args={}
@@ -117,4 +123,6 @@ def create_crisis(request):
     return render_to_response('create_crisis.html', args)
 
 def status_crisis(request):
-    return render_to_response('status_crisis.html')
+    crisis_type=request.session.get('type')
+    agency = Agency.objects.filter(type=crisis_type)
+    return render(request, 'status_crisis.html', {'agency':agency})
