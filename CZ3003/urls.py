@@ -32,4 +32,6 @@ urlpatterns = [
     url(r'^subscriber_successful/$', views.subscriber_successful),
     url(r'^crisis/create/$', views.create_crisis, name='Create Crisis'),
     url(r'^crisis/status/$', views.status_crisis, name='Crises Creation Status'),
+    url(r'^user/addreportreceiver', views.addReportReceiver, name="Add Report Receiver"),
+    url(r'^user/reportreceiveradded', views.report_reciever_added, name="Report Receiver Added")
 ]

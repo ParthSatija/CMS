@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.template import Context
 from forms import SubscriberForm
 from forms import CrisisCreateForm
+from forms import ReportReceiverForm
 from django.core.context_processors import csrf
 import datetime
 # Create your views here.
@@ -79,6 +80,23 @@ def createSubscriber(request):
     args['form'] = form
     return render_to_response('Subscribe.html', args)
 
+def addReportReceiver(request):
+     if request.POST:
+        form = ReportReceiverForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/user/reportreceiveradded')
+     else:
+        form = ReportReceiverForm()
+     args = {}
+     args.update(csrf(request))
+
+     args['form'] = form
+     return render_to_response('add_report_receiver.html', args)
+
+def report_reciever_added(request):
+    return render_to_response('loggedin.html')
+
 def subscriber_successful(request):
     return render_to_response('homepage.html')
 
@@ -90,7 +108,7 @@ def create_crisis(request):
             crisis.date = datetime.date.today()
             crisis.time = datetime.datetime.now().time()
             crisis.save()
-            return HttpResponseRedirect('/crisis/status',crisis)
+            return HttpResponseRedirect('/crisis/status')
     else:
         form=CrisisCreateForm()
     args={}
