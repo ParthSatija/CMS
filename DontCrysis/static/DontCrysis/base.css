@@ -118,3 +118,13 @@ td,th{
     padding: 5px;
     border-radius: 5px;
 }
+
+.map-switch{
+    font-size: 15px;
+    color: white;
+    background-color: rgba(0,0,0,0.5) ;
+    text-align: right;
+    border-radius: 4px;
+    padding: 5px;
+    marging-left: 10px;
+}

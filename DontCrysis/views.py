@@ -14,6 +14,9 @@ import datetime
 def homepage(request):
     return render(request,'homepage.html')
 
+def homepage_map2(request):
+    return render(request,'homepagemap2.html')
+
 def subscribe(request):
     return render(request, 'Subscribe.html')
 

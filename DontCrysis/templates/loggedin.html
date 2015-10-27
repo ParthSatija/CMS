@@ -21,8 +21,8 @@
        <tr>
        <td>{% if item.isActive %}
          <p id="exclaim"> ! </p>
-       {% endif %}
-       {% if not item.isActive %}<p id="safe">&#10004;</p>{% endif %}</td>
+       {% else %}
+       <p id="safe">&#10004;</p>{% endif %}</td>
        <td> {{ item.title }} </td>
        <td> {{ item.postalcode }}</td>
        <td> {{ item.severity }}</td>
@@ -34,8 +34,7 @@
            <a class="options" href="{% url "crisis_delete" item.id %}"> Delete </a>
            {% if item.isActive %}
              <a class="options" href= "{% url "crisis_toggle_active" item.id %}">Deactivate</a>
-           {% endif %}
-           {% if not item.isActive %}
+           {% else %}
              <a class="options" href="{% url "crisis_toggle_active" item.id %}">Activate</a>
            {% endif %}
 

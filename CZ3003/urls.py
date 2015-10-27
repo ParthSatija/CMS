@@ -20,6 +20,7 @@ from DontCrysis import views
 urlpatterns = [
     url(r'^$', views.homepage),
     url(r'^homepage/$', views.homepage),
+    url(r'^homepage/map2$', views.homepage_map2),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^invalid/$', views.invalid_login),
     url(r'^login/$',  views.login),
